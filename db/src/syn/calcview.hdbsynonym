@@ -1,0 +1,9 @@
+{
+  "CV_SBOOK": {
+    "target": {
+      "object": "CV_SBOOK",
+      "schema": "PBI",
+      "database": "HDB"
+    }
+  }
+}

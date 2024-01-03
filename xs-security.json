@@ -1,0 +1,40 @@
+{
+	"xsappname": "sflightApp",
+  "tenant-mode": "dedicated",
+	"scopes": [{
+		"name": "$XSAPPNAME.Display",
+		"description": "display"
+	}, {
+		"name": "$XSAPPNAME.Create",
+		"description": "create"
+	}, {
+		"name": "$XSAPPNAME.Edit",
+		"description": "edit"
+	}, {
+		"name": "$XSAPPNAME.Delete",
+		"description": "delete"
+	}],
+
+	"role-templates": [{
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    },{
+		"name": "Viewer",
+		"description": "View all records",
+		"scope-references": [
+			"$XSAPPNAME.Display"
+		]
+	}, {
+		"name": "Editor",
+		"description": "Edit and Delete records",
+		"scope-references": [
+			"$XSAPPNAME.Create",
+			"$XSAPPNAME.Edit",
+			"$XSAPPNAME.Delete",
+			"$XSAPPNAME.Display"
+		]
+	}]
+}

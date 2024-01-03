@@ -1,0 +1,53 @@
+ID: SFLIGHT_DEMO
+_schema-version: '2.1'
+version: 0.0.1
+modules:
+  - name: SFLIGHT_DEMO-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: SFLIGHT_DEMO-db-hdi-container
+        properties:
+          TARGET_CONTAINER: '~{hdi-container-name}'
+      - name: cross-container-service-1
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: ServiceName_1
+          service: '~{the-service-name}'
+      - name: cross-container-service-2
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: ServiceName_2
+          service: '~{the-service-name}'
+  - name: SFLIGHT_DEMO-srv
+    type: nodejs
+    path: srv
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+    requires:
+      - name: SFLIGHT_DEMO-db-hdi-container
+     
+  
+     
+resources:
+  - name: SFLIGHT_DEMO-db-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: '${service-name}'
+  - name: cross-container-service-1
+    parameters:
+      service-name: PBI
+    properties:
+      the-service-name: '${service-name}'
+    type: org.cloudfoundry.existing-service
+  - name: cross-container-service-2
+    parameters:
+      service-name: hdi_dbpb1
+    properties:
+      the-service-name: '${service-name}'
+    type: org.cloudfoundry.existing-service
+  
